@@ -12,5 +12,7 @@ namespace FuelLogger.Data
             : base(options)
         {
         }
+
+        public DbSet<Vehicle> CategoryType { get; set; }
     }
 }
