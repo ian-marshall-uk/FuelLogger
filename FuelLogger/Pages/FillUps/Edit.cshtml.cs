@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FuelLogger.Data;
 
-namespace FuelLogger.Pages.Vehicles
+namespace FuelLogger.Pages.FillUps
 {
     public class EditModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace FuelLogger.Pages.Vehicles
         }
 
         [BindProperty]
-        public Vehicle Vehicle { get; set; }
+        public FillUp FillUp { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,9 +29,9 @@ namespace FuelLogger.Pages.Vehicles
                 return NotFound();
             }
 
-            Vehicle = await _context.Vehicle.FirstOrDefaultAsync(m => m.Id == id);
+            FillUp = await _context.FillUp.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Vehicle == null)
+            if (FillUp == null)
             {
                 return NotFound();
             }
@@ -45,7 +45,7 @@ namespace FuelLogger.Pages.Vehicles
                 return Page();
             }
 
-            _context.Attach(Vehicle).State = EntityState.Modified;
+            _context.Attach(FillUp).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +53,7 @@ namespace FuelLogger.Pages.Vehicles
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VehicleExists(Vehicle.Id))
+                if (!FillUpExists(FillUp.Id))
                 {
                     return NotFound();
                 }
@@ -66,9 +66,9 @@ namespace FuelLogger.Pages.Vehicles
             return RedirectToPage("./Index");
         }
 
-        private bool VehicleExists(int id)
+        private bool FillUpExists(int id)
         {
-            return _context.Vehicle.Any(e => e.Id == id);
+            return _context.FillUp.Any(e => e.Id == id);
         }
     }
 }

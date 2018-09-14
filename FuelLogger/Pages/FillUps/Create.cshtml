@@ -1,0 +1,58 @@
+﻿@page
+@model FuelLogger.Pages.FillUps.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>FillUp</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MyFillUp.Vehicle" class="control-label"></label>
+                <select asp-for="SelectedVehicleId" asp-items="Model.AvailableVehicles" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MyFillUp.Date" class="control-label"></label>
+                <input type="date" asp-for="MyFillUp.Date" class="form-control" />
+                <span asp-validation-for="MyFillUp.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MyFillUp.OdometerReading" class="control-label"></label>
+                <input asp-for="MyFillUp.OdometerReading" class="form-control" />
+                <span asp-validation-for="MyFillUp.OdometerReading" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MyFillUp.Litres" class="control-label"></label>
+                <input asp-for="MyFillUp.Litres" class="form-control" />
+                <span asp-validation-for="MyFillUp.Litres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MyFillUp.PricePerLitre" class="control-label"></label>
+                <input asp-for="MyFillUp.PricePerLitre" class="form-control" />
+                <span asp-validation-for="MyFillUp.PricePerLitre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MyFillUp.Note" class="control-label"></label>
+                <input asp-for="MyFillUp.Note" class="form-control" />
+                <span asp-validation-for="MyFillUp.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

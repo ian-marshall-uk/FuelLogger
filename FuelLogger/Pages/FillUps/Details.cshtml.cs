@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FuelLogger.Data;
 
-namespace FuelLogger.Pages.Vehicles
+namespace FuelLogger.Pages.FillUps
 {
     public class DetailsModel : PageModel
     {
@@ -18,7 +18,7 @@ namespace FuelLogger.Pages.Vehicles
             _context = context;
         }
 
-        public Vehicle Vehicle { get; set; }
+        public FillUp FillUp { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,9 +27,9 @@ namespace FuelLogger.Pages.Vehicles
                 return NotFound();
             }
 
-            Vehicle = await _context.Vehicle.FirstOrDefaultAsync(m => m.Id == id);
+            FillUp = await _context.FillUp.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Vehicle == null)
+            if (FillUp == null)
             {
                 return NotFound();
             }

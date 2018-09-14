@@ -13,6 +13,7 @@ namespace FuelLogger.Data
         {
         }
 
-        public DbSet<Vehicle> CategoryType { get; set; }
+        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<FillUp> FillUp { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FuelLogger.Data;
 
-namespace FuelLogger.Pages.Vehicles
+namespace FuelLogger.Pages.FillUps
 {
     public class DeleteModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace FuelLogger.Pages.Vehicles
         }
 
         [BindProperty]
-        public Vehicle Vehicle { get; set; }
+        public FillUp FillUp { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +28,9 @@ namespace FuelLogger.Pages.Vehicles
                 return NotFound();
             }
 
-            Vehicle = await _context.Vehicle.FirstOrDefaultAsync(m => m.Id == id);
+            FillUp = await _context.FillUp.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Vehicle == null)
+            if (FillUp == null)
             {
                 return NotFound();
             }
@@ -44,11 +44,11 @@ namespace FuelLogger.Pages.Vehicles
                 return NotFound();
             }
 
-            Vehicle = await _context.Vehicle.FindAsync(id);
+            FillUp = await _context.FillUp.FindAsync(id);
 
-            if (Vehicle != null)
+            if (FillUp != null)
             {
-                _context.Vehicle.Remove(Vehicle);
+                _context.FillUp.Remove(FillUp);
                 await _context.SaveChangesAsync();
             }
 

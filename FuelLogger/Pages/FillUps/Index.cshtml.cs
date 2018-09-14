@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FuelLogger.Data;
 
-namespace FuelLogger.Pages.Vehicles
+namespace FuelLogger.Pages.FillUps
 {
     public class IndexModel : PageModel
     {
@@ -18,11 +18,11 @@ namespace FuelLogger.Pages.Vehicles
             _context = context;
         }
 
-        public IList<Vehicle> Vehicle { get;set; }
+        public IList<FillUp> FillUp { get;set; }
 
         public async Task OnGetAsync()
         {
-            Vehicle = await _context.Vehicle.ToListAsync();
+            FillUp = await _context.FillUp.ToListAsync();
         }
     }
 }
