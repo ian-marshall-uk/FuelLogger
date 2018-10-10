@@ -10,6 +10,7 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+@User.Identity.Name
 <table class="table">
     <thead>
         <tr>
@@ -32,29 +33,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.FillUp) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OdometerReading)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Litres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PricePerLitre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.FillUp)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OdometerReading)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Litres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerLitre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

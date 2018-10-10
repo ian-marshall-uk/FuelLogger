@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -24,8 +25,9 @@ namespace FuelLogger.Pages.FillUps
         public async Task OnGetAsync()
         {
             int VehicleId = 1;
+            var userID = "e22dbd0c-5e6e-4f7a-a86a-8fd693ca1ff0";
 
-            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId).ToListAsync();
+            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId && f.UserId == userID).ToListAsync();
         }
     }
 }
