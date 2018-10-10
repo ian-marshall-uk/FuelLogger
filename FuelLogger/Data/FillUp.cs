@@ -16,8 +16,12 @@ namespace FuelLogger.Data
         public virtual Vehicle Vehicle { get; set; }
 
         [Required]
+        public string UserId { get; set; }
+
+        [Required]
         public DateTime Date { get; set; }
 
+        [Required]
         [Display(Name = "Mileage")]
         public int OdometerReading { get; set; }
 
