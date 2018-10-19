@@ -11,6 +11,8 @@ namespace FuelLogger.Data
         [Required]
         public int Id { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
         [Required]
         public string Name { get; set; }
 

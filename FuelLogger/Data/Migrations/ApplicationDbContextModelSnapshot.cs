@@ -36,12 +36,13 @@ namespace FuelLogger.Data.Migrations
 
                     b.Property<double>("PricePerLitre");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<string>("UserId");
 
                     b.Property<int?>("VehicleId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
@@ -61,7 +62,11 @@ namespace FuelLogger.Data.Migrations
 
                     b.Property<string>("RegistrationNumber");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Vehicle");
                 });
@@ -120,6 +125,9 @@ namespace FuelLogger.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -159,6 +167,8 @@ namespace FuelLogger.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -231,11 +241,35 @@ namespace FuelLogger.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("FuelLogger.Data.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("IsAdmin");
+
+                    b.Property<string>("Name");
+
+                    b.ToTable("ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
             modelBuilder.Entity("FuelLogger.Data.FillUp", b =>
                 {
+                    b.HasOne("FuelLogger.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.HasOne("FuelLogger.Data.Vehicle", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId");
+                });
+
+            modelBuilder.Entity("FuelLogger.Data.Vehicle", b =>
+                {
+                    b.HasOne("FuelLogger.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

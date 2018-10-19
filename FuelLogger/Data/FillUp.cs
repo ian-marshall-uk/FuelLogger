@@ -15,9 +15,8 @@ namespace FuelLogger.Data
         [ForeignKey("VehicleId")]
         public virtual Vehicle Vehicle { get; set; }
 
-        [Required]
-        public string UserId { get; set; }
-
+        public virtual ApplicationUser User { get; set; }
+    
         [Required]
         public DateTime Date { get; set; }
 

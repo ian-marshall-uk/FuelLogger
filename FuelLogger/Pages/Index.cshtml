@@ -6,28 +6,27 @@
 
 @using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 
 
 @{
     ViewData["Title"] = "Home page";
+    string myName = (SignInManager.IsSignedIn(User)) ? UserManager.GetUserAsync(User).Result.Name : "";
 }
 
-@SignInManager.SignOutAsync()
-
 <div id="SideSpacing" style="margin-left: 5.0rem !important; margin-right: 5.0rem !important;">
-    <div class="row" style="margin-bottom: 5.0rem !important;">
-        <div class="col-sm-12">
-            <h3 class="text-info" align="center">Hello: @User.Identity.Name</h3>
-        </div>
-    </div>
     @if (SignInManager.IsSignedIn(User))
     {
+        <div class="row" style="margin-bottom: 5.0rem !important;">
+            <div class="col-sm-12">
+                <h3 class="text-info" align="center">Hello: @myName</h3>
+            </div>
+        </div>
         <div class="row" style="margin-bottom: 2.0rem !important;">
             <div class="col-sm-12">
-                <a class="btn btn-block btn-lg btn-info" asp-area="Identity" asp-page="/Account/Logout">Logout @User.Identity.Name</a>
+                <a class="btn btn-block btn-lg btn-info" asp-area="Identity" asp-page="/Account/Logout">Logout @myName</a>
             </div>
         </div>
     }

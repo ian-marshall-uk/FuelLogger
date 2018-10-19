@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FuelLogger.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace FuelLogger.Pages.FillUps
 {
     public class CreateModel : PageModel
     {
         private readonly FuelLogger.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _user;
 
-        public CreateModel(FuelLogger.Data.ApplicationDbContext context)
+        public CreateModel(FuelLogger.Data.ApplicationDbContext context, UserManager<ApplicationUser> user)
         {
             _context = context;
+            _user = user;
             AvailableVehicles = new List<SelectListItem>();
 
             foreach (var vehicle in _context.Vehicle)
@@ -46,6 +49,8 @@ namespace FuelLogger.Pages.FillUps
             {
                 return Page();
             }
+
+            MyFillUp.User = await _user.GetUserAsync(User);
 
             MyFillUp.Vehicle = _context.Vehicle.FirstOrDefault(v => v.Id.ToString() == SelectedVehicleId);
             _context.FillUp.Add(MyFillUp);

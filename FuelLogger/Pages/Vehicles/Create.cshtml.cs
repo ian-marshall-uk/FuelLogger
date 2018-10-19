@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FuelLogger.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace FuelLogger.Pages.Vehicles
 {
     public class CreateModel : PageModel
     {
         private readonly FuelLogger.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _user;
 
-        public CreateModel(FuelLogger.Data.ApplicationDbContext context)
+        public CreateModel(FuelLogger.Data.ApplicationDbContext context, UserManager<ApplicationUser> user)
         {
             _context = context;
+            _user = user;
         }
 
         public IActionResult OnGet()
@@ -32,6 +35,8 @@ namespace FuelLogger.Pages.Vehicles
             {
                 return Page();
             }
+
+            Vehicle.User = await _user.GetUserAsync(User);
 
             _context.Vehicle.Add(Vehicle);
             await _context.SaveChangesAsync();

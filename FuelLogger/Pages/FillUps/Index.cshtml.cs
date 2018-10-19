@@ -25,9 +25,8 @@ namespace FuelLogger.Pages.FillUps
         public async Task OnGetAsync()
         {
             int VehicleId = 1;
-            var userID = "e22dbd0c-5e6e-4f7a-a86a-8fd693ca1ff0";
 
-            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId && f.UserId == userID).ToListAsync();
+            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId).ToListAsync();
         }
     }
 }
