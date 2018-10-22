@@ -50,9 +50,21 @@ namespace FuelLogger.Pages.FillUps
                 return Page();
             }
 
-            MyFillUp.User = await _user.GetUserAsync(User);
+            int lastOdometerReading = 0;
+            var lastFillUp = _context.FillUp.LastOrDefault(f => f.Vehicle.Id == 1);
+            if (lastFillUp != null)
+            {
+                lastOdometerReading = lastFillUp.OdometerReading;
+            }
+            else
+            {
+                lastOdometerReading = MyFillUp.Vehicle.InitialOdometerReading;
+            }
 
+            MyFillUp.User = await _user.GetUserAsync(User);
             MyFillUp.Vehicle = _context.Vehicle.FirstOrDefault(v => v.Id.ToString() == SelectedVehicleId);
+            //MyFillUp.MileageDelta = MyFillUp.OdometerReading - lastOdometerReading;
+            //MyFillUp.MPG = (MyFillUp.MileageDelta / (MyFillUp.Litres / 4.54));
             _context.FillUp.Add(MyFillUp);
             await _context.SaveChangesAsync();
 
