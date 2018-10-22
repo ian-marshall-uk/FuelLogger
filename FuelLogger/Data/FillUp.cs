@@ -32,5 +32,8 @@ namespace FuelLogger.Data
 
         [MaxLength(50)]
         public string Note { get; set; }
+
+        public int MileageDelta { get; set; }
+        public double MPG { get; set; }
     }
 }
