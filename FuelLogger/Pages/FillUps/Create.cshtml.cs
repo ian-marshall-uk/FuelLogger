@@ -50,11 +50,13 @@ namespace FuelLogger.Pages.FillUps
                 return Page();
             }
 
+            var selectedVehicleId = Convert.ToInt32(SelectedVehicleId);
+
             MyFillUp.User = await _user.GetUserAsync(User);
-            MyFillUp.Vehicle = _context.Vehicle.FirstOrDefault(v => v.Id.ToString() == SelectedVehicleId);
+            MyFillUp.Vehicle = _context.Vehicle.FirstOrDefault(v => v.Id == selectedVehicleId);
 
             int lastOdometerReading = 0;
-            var lastFillUp = _context.FillUp.OrderByDescending(ff => ff.Date).FirstOrDefault(f => f.Vehicle.Id == 1);
+            var lastFillUp = _context.FillUp.OrderByDescending(ff => ff.Date).FirstOrDefault(f => f.Vehicle.Id == selectedVehicleId);
             if (lastFillUp != null)
             {
                 lastOdometerReading = lastFillUp.OdometerReading;

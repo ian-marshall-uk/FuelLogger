@@ -50,6 +50,7 @@ namespace FuelLogger.Pages.FillUps
             try
             {
                 await _context.SaveChangesAsync();
+                RecalculateDeltasAndMPG(1);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,5 +71,24 @@ namespace FuelLogger.Pages.FillUps
         {
             return _context.FillUp.Any(e => e.Id == id);
         }
+
+        private void RecalculateDeltasAndMPG(int vehicleId)
+        {
+            var vehicle = _context.Vehicle.FirstOrDefault(v => v.Id == vehicleId);
+            if (vehicle != null)
+            {
+                var odometerReading = vehicle.InitialOdometerReading;
+                var fillUps = _context.FillUp.Where(f => f.Vehicle.Id == vehicleId).OrderBy(f => f.Date).ToList();
+                foreach (var fillUp in  fillUps)
+                {
+                    fillUp.MileageDelta = fillUp.OdometerReading - odometerReading;
+                    fillUp.MPG = (fillUp.MileageDelta / (fillUp.Litres / 4.54));
+                    odometerReading = fillUp.OdometerReading;
+                }
+            }
+
+            _context.SaveChanges();
+        }
+
     }
 }
