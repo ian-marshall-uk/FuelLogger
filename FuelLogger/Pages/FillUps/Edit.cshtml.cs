@@ -29,7 +29,7 @@ namespace FuelLogger.Pages.FillUps
                 return NotFound();
             }
 
-            FillUp = await _context.FillUp.FirstOrDefaultAsync(m => m.Id == id);
+            FillUp = await _context.FillUp.Include(m => m.Vehicle).FirstOrDefaultAsync(m => m.Id == id);
 
             if (FillUp == null)
             {
@@ -50,7 +50,7 @@ namespace FuelLogger.Pages.FillUps
             try
             {
                 await _context.SaveChangesAsync();
-                RecalculateDeltasAndMPG(1);
+                RecalculateDeltasAndMPG(FillUp.Vehicle.Id);
             }
             catch (DbUpdateConcurrencyException)
             {

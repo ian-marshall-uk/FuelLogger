@@ -14,6 +14,9 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="FillUp.Id" />
+            <input type="hidden" asp-for="FillUp.Vehicle .Id" />
+            <input type="hidden" asp-for="FillUp.Vehicle .Name" />
+            <input type="hidden" asp-for="FillUp.Vehicle .InitialOdometerReading" />
             <div class="form-group">
                 <label asp-for="FillUp.Date" class="control-label"></label>
                 <input asp-for="FillUp.Date" class="form-control" />
