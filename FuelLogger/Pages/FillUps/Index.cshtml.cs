@@ -26,11 +26,12 @@ namespace FuelLogger.Pages.FillUps
         {
             int VehicleId = 1;
 
-            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId).ToListAsync();
+            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId).Include(f => f.Vehicle).ToListAsync();
         }
     }
 }
 
+Add properties for bad MPG, acceptable mpg and good mpg to vehicle and to vehilce CRUD pages
 
 
 /*
