@@ -1,15 +1,17 @@
 ﻿@page
 @model FuelLogger.Pages.Vehicles.IndexModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
+    string myName = (SignInManager.IsSignedIn(User)) ? UserManager.GetUserAsync(User).Result.Name : "";
 }
 
-<h2>Index</h2>
+<h2>Vehicles for: @myName</h2>
+<br />
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -26,29 +28,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Vehicle) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InitialOdometerReading)
-            </td>
-            <td>
-                <a class="btn btn-sm btn-success" asp-page="./Edit" asp-route-id="@item.Id">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a> 
-                <a class="btn btn-sm btn-info" asp-page="./Details" asp-route-id="@item.Id">
-                    <span class="glyphicon glyphicon-list"></span>
-                </a> 
-                <a class="btn btn-sm btn-danger" asp-page="./Delete" asp-route-id="@item.Id">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Vehicle)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InitialOdometerReading)
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-success" asp-page="./Edit" asp-route-id="@item.Id">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a class="btn btn-sm btn-info" asp-page="./Details" asp-route-id="@item.Id">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </a>
+                    <a class="btn btn-sm btn-danger" asp-page="./Delete" asp-route-id="@item.Id">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<a class="btn btn-sm btn-primary" asp-page="..\Index">Home</a>

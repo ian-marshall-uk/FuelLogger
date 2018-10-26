@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FuelLogger.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FuelLogger.Pages.FillUps
@@ -14,24 +15,53 @@ namespace FuelLogger.Pages.FillUps
     public class IndexModel : PageModel
     {
         private readonly FuelLogger.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _user;
 
-        public IndexModel(FuelLogger.Data.ApplicationDbContext context)
+        public IndexModel(FuelLogger.Data.ApplicationDbContext context, UserManager<ApplicationUser> user)
         {
             _context = context;
+            _user = user;
+
         }
+
+        [BindProperty]
+        public List<SelectListItem> AvailableVehicles { get; set; }
+        [BindProperty]
+        public string SelectedVehicleId { get; set; }
 
         public IList<FillUp> FillUp { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? id)
         {
-            int VehicleId = 1;
+            if (id.HasValue)
+            {
+                SelectedVehicleId = id.Value.ToString();
+            }
+            else
+            {
+                SelectedVehicleId = _context.Vehicle.Include(v => v.User)
+                    .FirstOrDefault(v => v.User.Id == _user.GetUserAsync(User).Result.Id)?.Id.ToString();
+            }
 
-            FillUp = await _context.FillUp.Where(f => f.Vehicle.Id == VehicleId).Include(f => f.Vehicle).ToListAsync();
+            AvailableVehicles = new List<SelectListItem>();
+
+            foreach (var vehicle in _context.Vehicle)
+            {
+                AvailableVehicles.Add(new SelectListItem(vehicle.Name, vehicle.Id.ToString()));
+            }
+
+            if (SelectedVehicleId != null)
+            {
+                FillUp = new List<FillUp>();
+                FillUp = _context.FillUp.Include(f => f.Vehicle).Where(f => f.Vehicle.Id == Convert.ToInt32(SelectedVehicleId)).ToList();
+            }
+            else
+            {
+                FillUp = new List<FillUp>();
+            }
         }
     }
 }
-
-Add properties for bad MPG, acceptable mpg and good mpg to vehicle and to vehilce CRUD pages
 
 
 /*

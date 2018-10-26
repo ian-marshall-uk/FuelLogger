@@ -30,11 +30,15 @@ namespace FuelLogger.Pages.FillUps
         [BindProperty]
         public List<SelectListItem> AvailableVehicles { get; set; }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int? id)
         {
+            var vehicle = _context.Vehicle.FirstOrDefault(v => v.Id == id);
+
             MyFillUp = new FillUp();
 
             MyFillUp.Date = DateTime.Now;
+            MyFillUp.Vehicle = vehicle;
+
             return Page();
         }
 
@@ -50,13 +54,10 @@ namespace FuelLogger.Pages.FillUps
                 return Page();
             }
 
-            var selectedVehicleId = Convert.ToInt32(SelectedVehicleId);
-
             MyFillUp.User = await _user.GetUserAsync(User);
-            MyFillUp.Vehicle = _context.Vehicle.FirstOrDefault(v => v.Id == selectedVehicleId);
 
             int lastOdometerReading = 0;
-            var lastFillUp = _context.FillUp.OrderByDescending(ff => ff.Date).FirstOrDefault(f => f.Vehicle.Id == selectedVehicleId);
+            var lastFillUp = _context.FillUp.OrderByDescending(ff => ff.Date).FirstOrDefault(f => f.Vehicle.Id == MyFillUp.Vehicle.Id);
             if (lastFillUp != null)
             {
                 lastOdometerReading = lastFillUp.OdometerReading;
@@ -71,7 +72,7 @@ namespace FuelLogger.Pages.FillUps
             _context.FillUp.Add(MyFillUp);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { Id = MyFillUp.Vehicle.Id});
         }
     }
 }

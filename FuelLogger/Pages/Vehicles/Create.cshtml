@@ -29,6 +29,16 @@
                 <span asp-validation-for="Vehicle.InitialOdometerReading" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Vehicle.MPGLimits_Bad" class="control-label"></label>
+                <input asp-for="Vehicle.MPGLimits_Bad" class="form-control" />
+                <span asp-validation-for="Vehicle.MPGLimits_Bad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.MPGLimits_OK" class="control-label"></label>
+                <input asp-for="Vehicle.MPGLimits_OK" class="form-control" />
+                <span asp-validation-for="Vehicle.MPGLimits_OK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>

@@ -22,5 +22,12 @@ namespace FuelLogger.Data
         [Required]
         [Display(Name = "Initial mileage")]
         public int InitialOdometerReading { get; set; }
+
+        [Display(Name = "Bad MPG upper limit")]
+        public int MPGLimits_Bad { get; set; }
+
+        [Display(Name = "OK MPG upper limit")]
+        public int MPGLimits_OK { get; set; }
     }
 }
+

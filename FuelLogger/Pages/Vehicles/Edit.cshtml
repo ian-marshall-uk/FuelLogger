@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Vehicle.Id" />
             <div class="form-group">
-                <label asp-for="Vehicle.Name" class="control-label"></label> 
+                <label asp-for="Vehicle.Name" class="control-label"></label>
                 <input asp-for="Vehicle.Name" class="form-control" />
                 <span asp-validation-for="Vehicle.Name" class="text-danger"></span>
             </div>
@@ -28,6 +28,16 @@
                 <label asp-for="Vehicle.InitialOdometerReading" class="control-label"></label>
                 <input asp-for="Vehicle.InitialOdometerReading" class="form-control" />
                 <span asp-validation-for="Vehicle.InitialOdometerReading" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.MPGLimits_Bad" class="control-label"></label>
+                <input asp-for="Vehicle.MPGLimits_Bad" class="form-control" />
+                <span asp-validation-for="Vehicle.MPGLimits_Bad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vehicle.MPGLimits_OK" class="control-label"></label>
+                <input asp-for="Vehicle.MPGLimits_OK" class="form-control" />
+                <span asp-validation-for="Vehicle.MPGLimits_OK" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default btn-success" />

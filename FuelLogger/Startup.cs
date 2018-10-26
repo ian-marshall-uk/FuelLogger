@@ -39,7 +39,7 @@ namespace FuelLogger
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DesktopConnection")));
+                    Configuration.GetConnectionString("LaptopConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
